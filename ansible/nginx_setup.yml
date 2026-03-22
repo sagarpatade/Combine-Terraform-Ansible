@@ -1,0 +1,19 @@
+- name: Configure Nginx on EC2
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Nginx
+      dnf: 
+        name: nginx
+        state: latest
+
+    - name: Start and Enable Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Create custom index.html
+      copy:
+        content: "<h1>Deployed via Terraform and Ansible!</h1>"
+        dest: /usr/share/nginx/html/index.html
